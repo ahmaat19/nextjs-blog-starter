@@ -71,7 +71,7 @@ const TableView = (props) => {
         </thead>
 
         <tbody>
-          {table?.data?.data.map((item) => {
+          {table?.data?.data?.map((item) => {
             return (
               <tr key={item._id}>
                 {table.image && (
@@ -140,7 +140,11 @@ const TableView = (props) => {
                       {deleteHandler && (
                         <button
                           className='btn btn-danger btn-sm ms-1 rounded-pill'
-                          onClick={() => deleteHandler(item._id)}
+                          onClick={() =>
+                            deleteHandler(
+                              label === 'Media' ? item?.url : item._id
+                            )
+                          }
                           disabled={isLoadingDelete}
                         >
                           {isLoadingDelete ? (

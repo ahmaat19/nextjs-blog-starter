@@ -36,7 +36,7 @@ export const isAuth = async (req, res, next) => {
       const urlArray = url.split('/')
       const lastIndex = urlArray.pop()
 
-      if (lastIndex.length > 18 && !lastIndex.includes('q')) {
+      if (lastIndex.length > 18 && !lastIndex.includes('q=')) {
         const queryKey = Object.keys(req.query)
         url = urlArray.join('/') + '/' + `:${queryKey[0]}`
       }

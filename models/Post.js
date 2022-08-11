@@ -1,11 +1,17 @@
 import mongoose from 'mongoose'
+import User from './User'
+import Category from './Category'
 
-const storyScheme = mongoose.Schema(
+const postScheme = mongoose.Schema(
   {
-    name: { type: String, required: true },
+    title: { type: String, required: true },
     image: { type: String, required: true },
     content: { type: String, required: true },
-    excerpt: { type: String, required: true },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Category,
+      required: true,
+    },
 
     status: { type: String, enum: ['active', 'disabled'], default: 'active' },
     created: {
@@ -21,5 +27,5 @@ const storyScheme = mongoose.Schema(
   { timestamps: true }
 )
 
-const Story = mongoose.models.Story || mongoose.model('Story', storyScheme)
-export default Story
+const Post = mongoose.models.Post || mongoose.model('Post', postScheme)
+export default Post

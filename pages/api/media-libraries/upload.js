@@ -1,14 +1,13 @@
 import nc from 'next-connect'
 import path from 'path'
 import fileUpload from 'express-fileupload'
-import { isAuth } from '../../../utils/auth'
 export const config = { api: { bodyParser: false } }
 const __dirname = path.resolve()
+import { isAuth } from '../../../utils/auth'
 
 const handler = nc()
-handler.use(isAuth)
-
 handler.use(fileUpload())
+handler.use(isAuth)
 
 handler.post(async (req, res) => {
   // check if there is no files

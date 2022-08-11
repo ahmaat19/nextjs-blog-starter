@@ -17,7 +17,7 @@ handler.put(async (req, res) => {
     let type
     let permission = []
     let clientPermission = []
-    if (name) type = name.toUpperCase().trim().replace(/\s+/g, '_')
+    if (name) type = name?.toUpperCase().trim().replace(/\s+/g, '_')
 
     if (req.body.permission) {
       if (Array.isArray(req.body.permission)) {
@@ -35,6 +35,9 @@ handler.put(async (req, res) => {
       }
     }
 
+    permission = permission?.filter((per) => per)
+    clientPermission = clientPermission?.filter((client) => client)
+
     const object = await schemaName.findById(id)
     if (!object)
       return res.status(400).json({ error: `${schemaNameString} not found` })
@@ -46,7 +49,7 @@ handler.put(async (req, res) => {
     object.clientPermission = clientPermission
     await object.save()
 
-    res.status(200).json({ message: `${schemaNameString} updated` })
+    res.status(200).send(`${schemaNameString} updated`)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
@@ -76,7 +79,7 @@ handler.delete(async (req, res) => {
     }
 
     await object.remove()
-    res.status(200).json({ message: `${schemaNameString} removed` })
+    res.status(200).send(`${schemaNameString} removed`)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }

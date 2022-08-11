@@ -1,13 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import {
-  FaCog,
-  FaUserCircle,
-  FaSignInAlt,
-  FaUserPlus,
-  FaPowerOff,
-} from 'react-icons/fa'
+import { FaSignInAlt, FaUserPlus, FaPowerOff } from 'react-icons/fa'
 import useAuthHook from '../utils/api/auth'
 import { useMutation } from 'react-query'
 import { useRouter } from 'next/router'
@@ -91,17 +85,14 @@ const Navigation = () => {
     return { uniqueDropdowns, menuItems }
   }
 
-  menus()
-
   const authItems = () => {
     return (
       <>
         <ul className='navbar-nav ms-auto'>
           {menus() &&
-            menus().menuItems.map(
+            menus()?.menuItems?.map(
               (menu) =>
-                menu.menu === 'normal' &&
-                menu.auth === true && (
+                menu.menu === 'normal' && (
                   <li key={menu._id} className='nav-item'>
                     <Link href={menu.path}>
                       <a className='nav-link' aria-current='page'>
