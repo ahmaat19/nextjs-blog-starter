@@ -8,15 +8,19 @@ import { Spinner, Pagination, Message, Confirm } from '../components'
 import { inputText, inputTextArea } from '../utils/dynamicForm'
 import FormView from '../components/FormView'
 import useMediasHook from '../utils/api/medias'
+import useUploadHook from '../utils/api/upload'
 import TableView from '../components/TableView'
 
 const Medias = () => {
   const [page, setPage] = useState(1)
+  const [file, setFile] = useState(null)
+  const [fileLink, setFileLink] = useState(null)
 
   const { getMedias, postMedia, deleteMedia } = useMediasHook({
     page,
     q: '',
   })
+  const { postUpload } = useUploadHook()
 
   const {
     register,
@@ -33,6 +37,15 @@ const Medias = () => {
   const { data, isLoading, isError, error, refetch } = getMedias
 
   const {
+    data: dataUpload,
+    isLoading: isLoadingUpload,
+    isError: isErrorUpload,
+    error: errorUpload,
+    mutateAsync: mutateAsyncUpload,
+    isSuccess: isSuccessUpload,
+  } = postUpload
+
+  const {
     isLoading: isLoadingDelete,
     isError: isErrorDelete,
     error: errorDelete,
@@ -47,6 +60,15 @@ const Medias = () => {
     isSuccess: isSuccessPost,
     mutateAsync: mutateAsyncPost,
   } = postMedia
+
+  useEffect(() => {
+    if (file) {
+      const formData = new FormData()
+      formData.append('file', file)
+      mutateAsyncUpload({ type: 'image', formData })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [file])
 
   useEffect(() => {
     if (isSuccessPost) formCleanHandler()
@@ -82,6 +104,11 @@ const Medias = () => {
 
   const submitHandler = (data) => {
     mutateAsyncPost(data)
+    if (file) {
+      const formData = new FormData()
+      formData.append('file', file)
+      mutateAsyncUpload({ type: 'image', formData })
+    }
   }
 
   const form = [

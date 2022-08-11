@@ -24,8 +24,8 @@ export default function useMediasHook(props) {
     }
   )
 
-  const mediaMedia = useMutation(
-    async (obj) => await dynamicAPI('media', url, obj),
+  const postMedia = useMutation(
+    async (obj) => await dynamicAPI('post', url, obj),
     {
       retry: 0,
       onSuccess: () => queryClient.invalidateQueries([queryKey]),
@@ -35,6 +35,6 @@ export default function useMediasHook(props) {
   return {
     getMedias,
     deleteMedia,
-    mediaMedia,
+    postMedia,
   }
 }
