@@ -102,7 +102,7 @@ const clientPermissions = [
   },
   {
     name: 'Media Libraries',
-    path: '/media-libraries',
+    path: '/medias',
     menu: 'normal',
     auth: true,
     description: 'Media Libraries page',
@@ -322,21 +322,21 @@ const permissions = [
   },
   {
     description: 'Upload media',
-    route: '/api/media-libraries/upload',
+    route: '/api/medias/upload',
     auth: true,
     name: 'Media',
     method: 'POST',
   },
   {
     description: 'Get medias',
-    route: '/api/media-libraries',
+    route: '/api/medias',
     auth: true,
     name: 'Media',
     method: 'GET',
   },
   {
     description: 'Delete media',
-    route: '/api/media-libraries/:id',
+    route: '/api/medias/:id',
     auth: true,
     name: 'Media',
     method: 'DELETE',

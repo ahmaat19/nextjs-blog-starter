@@ -1,7 +1,7 @@
 import dynamicAPI from './dynamicAPI'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
-const url = '/api/media-libraries'
+const url = '/api/medias'
 
 const queryKey = 'medias'
 
@@ -25,7 +25,8 @@ export default function useMediasHook(props) {
   )
 
   const postMedia = useMutation(
-    async (obj) => await dynamicAPI('post', url, obj),
+    async (obj) =>
+      await dynamicAPI('post', `${url}/upload?media=${obj.type}`, obj.formData),
     {
       retry: 0,
       onSuccess: () => queryClient.invalidateQueries([queryKey]),

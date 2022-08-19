@@ -48,6 +48,10 @@ export const isAuth = async (req, res, next) => {
           url = url.split('?')[0]
         }
       }
+
+      if (url.includes('?')) {
+        url = url.split('?')[0]
+      }
       if (
         userRole.role.permission.find(
           (permission) =>
@@ -70,7 +74,7 @@ export const isAuth = async (req, res, next) => {
           .status(403)
           .send({ error: 'You do not have permission to access this route' })
       }
-
+      url = req.url
       next()
     } catch (error) {
       res.status(401).json({ error: 'Unauthorized' })
