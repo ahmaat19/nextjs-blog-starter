@@ -9,7 +9,7 @@ const schemaNameString = 'Post'
 
 const handler = nc()
 handler.use(isAuth)
-handler.put(async (req, res) => {
+handler.get(async (req, res) => {
   await db()
   try {
     const { id } = req.query
@@ -23,6 +23,7 @@ handler.put(async (req, res) => {
 
 handler.put(async (req, res) => {
   await db()
+
   try {
     const { id } = req.query
     const { title, image, content, category, status } = req.body

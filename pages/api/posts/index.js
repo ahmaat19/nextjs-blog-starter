@@ -26,7 +26,12 @@ handler.get(async (req, res) => {
 
     const pages = Math.ceil(total / pageSize)
 
-    query = query.skip(skip).limit(pageSize).sort({ createdAt: -1 }).lean()
+    query = query
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ createdAt: -1 })
+      .lean()
+      .populate('category', ['name'])
 
     const result = await query
 

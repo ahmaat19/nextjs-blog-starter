@@ -32,8 +32,8 @@ export default function useCategoriesHook(props) {
     }
   )
 
-  const categoryCategory = useMutation(
-    async (obj) => await dynamicAPI('category', url, obj),
+  const postCategory = useMutation(
+    async (obj) => await dynamicAPI('post', url, obj),
     {
       retry: 0,
       onSuccess: () => queryClient.invalidateQueries([queryKey]),
@@ -44,6 +44,6 @@ export default function useCategoriesHook(props) {
     getCategories,
     updateCategory,
     deleteCategory,
-    categoryCategory,
+    postCategory,
   }
 }

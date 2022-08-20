@@ -9,7 +9,7 @@ import { inputFile, staticInputSelect } from '../utils/dynamicForm'
 import FormView from '../components/FormView'
 import useMediasHook from '../utils/api/medias'
 import copy from 'copy-to-clipboard'
-import { FaClipboard, FaDownload, FaTrash } from 'react-icons/fa'
+import { FaClipboard, FaDownload, FaFileAlt, FaTrash } from 'react-icons/fa'
 
 const Medias = () => {
   const [file, setFile] = useState(null)
@@ -58,7 +58,6 @@ const Medias = () => {
 
   const deleteHandler = (id) => {
     const url = id?.split('/')[id?.split('/').length - 1]
-    console.log({ url })
     confirmAlert(Confirm(() => mutateAsyncDelete(`delete-this-image*${url}`)))
   }
 
@@ -187,40 +186,46 @@ const Medias = () => {
               <div key={media?._id} className='col-lg-3 col-md-4 col-6'>
                 <div className='card border-0 shadow-sm'>
                   <div className='card-body'>
-                    <a
-                      href={media?.url}
-                      target='_blank'
-                      rel='noreferrer'
-                      className='btn btn-primary btn-sm w-100 text-start'
-                    >
-                      <FaDownload className='mb-1' /> Download
-                    </a>
-                    <button
-                      onClick={() => copyToClipboard(media?.url)}
-                      className={`btn ${
-                        clipBoard === media?.url ? 'btn-success' : 'btn-primary'
-                      }  btn-sm w-100 text-start my-2`}
-                    >
-                      <FaClipboard className='mb-1' />{' '}
-                      {clipBoard === media?.url
-                        ? 'Copied to clipboard'
-                        : 'Copy URL'}
-                    </button>
-                    {deleteHandler && (
-                      <button
-                        className='btn btn-danger btn-sm w-100 text-start'
-                        onClick={() => deleteHandler(media?.url)}
-                        disabled={isLoadingDelete}
+                    <FaFileAlt
+                      className='card-img-top mb-2 text-secondary'
+                      style={{ fontSize: '15rem' }}
+                    />
+                    <div className='d-flex justify-content-between'>
+                      <a
+                        href={media?.url}
+                        target='_blank'
+                        rel='noreferrer'
+                        className='btn btn-primary btn-sm text-start'
                       >
-                        {isLoadingDelete ? (
-                          <span className='spinner-border spinner-border-sm' />
-                        ) : (
-                          <span>
-                            <FaTrash className='mb-1' /> Delete
-                          </span>
-                        )}
+                        <FaDownload className='mb-1' />
+                      </a>
+                      <button
+                        onClick={() => copyToClipboard(media?.url)}
+                        className={`btn ${
+                          clipBoard === media?.url
+                            ? 'btn-success'
+                            : 'btn-primary'
+                        }  btn-sm text-start`}
+                      >
+                        <FaClipboard className='mb-1' />{' '}
+                        {clipBoard === media?.url ? 'Copied' : 'Copy'}
                       </button>
-                    )}
+                      {deleteHandler && (
+                        <button
+                          className='btn btn-danger btn-sm text-start'
+                          onClick={() => deleteHandler(media?.url)}
+                          disabled={isLoadingDelete}
+                        >
+                          {isLoadingDelete ? (
+                            <span className='spinner-border spinner-border-sm' />
+                          ) : (
+                            <span>
+                              <FaTrash className='mb-1' />
+                            </span>
+                          )}
+                        </button>
+                      )}
+                    </div>
                     <button className='btn btn-outline-primary btn-sm w-100 text-start my-2'>
                       <small>{media?.url?.split('/')[2]}</small>
                     </button>{' '}
@@ -230,17 +235,6 @@ const Medias = () => {
             ))}
           </div>
         </div>
-        // <TableView
-        //   table={table}
-        //   editHandler={null}
-        //   deleteHandler={deleteHandler}
-        //   searchHandler={null}
-        //   isLoadingDelete={isLoadingDelete}
-        //   name={name}
-        //   label={label}
-        //   modal={modal}
-        //   addBtn={true}
-        // />
       )}
     </>
   )

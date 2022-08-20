@@ -63,6 +63,7 @@ const TableView = (props) => {
             {table.confirmed && <th>Confirmed</th>}
             {table.blocked && <th>Blocked</th>}
             {table.auth && <th>Auth</th>}
+            {table.status && <th>Status</th>}
 
             {(editHandler || deleteHandler) && (
               <th className='text-right'>Action</th>
@@ -119,6 +120,16 @@ const TableView = (props) => {
                       <FaCheckCircle className='text-success' />
                     ) : (
                       <FaTimesCircle className='text-danger' />
+                    )}
+                  </td>
+                )}
+
+                {table?.status && (
+                  <td>
+                    {item?.status === 'active' ? (
+                      <span className='badge bg-success'>{item?.status}</span>
+                    ) : (
+                      <span className='badge bg-danger'>{item?.status}</span>
                     )}
                   </td>
                 )}

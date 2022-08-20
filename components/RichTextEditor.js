@@ -51,6 +51,7 @@ const RichTextEditor = ({ setText, text, height = 400 }) => {
       theme='snow'
       onChange={(e) => setText(e)}
       defaultValue={text}
+      value={text}
       style={{ minHeight: `${height}px` }}
       className='bg-light p-2'
       placeholder='Enter text here'
