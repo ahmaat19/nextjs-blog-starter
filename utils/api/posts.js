@@ -1,7 +1,7 @@
 import dynamicAPI from './dynamicAPI'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
-const url = '/api/posts'
+const url = '/api/content-manager/posts'
 
 const queryKey = 'posts'
 
@@ -17,9 +17,9 @@ export default function usePostsHook(props) {
   )
 
   const getPostById = useQuery(
-    queryKey,
-    async (id) => await dynamicAPI('get', `${url}/${id}`, {}),
-    { retry: 0, enabled: !!id }
+    ['post'],
+    async () => await dynamicAPI('get', `${url}/${id}`, {}),
+    { retry: 3, enabled: !!id }
   )
 
   const updatePost = useMutation(

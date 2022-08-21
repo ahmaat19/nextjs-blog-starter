@@ -1,7 +1,7 @@
 import dynamicAPI from './dynamicAPI'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
-const url = '/api/categories'
+const url = '/api/content-manager/categories'
 
 const queryKey = 'categories'
 

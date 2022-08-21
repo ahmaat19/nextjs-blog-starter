@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import withAuth from '../HOC/withAuth'
+import withAuth from '../../HOC/withAuth'
 import { confirmAlert } from 'react-confirm-alert'
 import { useForm } from 'react-hook-form'
-import useCategoriesHook from '../utils/api/categories'
-import { Spinner, Pagination, Message, Confirm } from '../components'
-import { inputText } from '../utils/dynamicForm'
-import TableView from '../components/TableView'
-import FormView from '../components/FormView'
+import useCategoriesHook from '../../utils/api/categories'
+import { Spinner, Pagination, Message, Confirm } from '../../components'
+import { inputText } from '../../utils/dynamicForm'
+import TableView from '../../components/TableView'
+import FormView from '../../components/FormView'
 
 const Categories = () => {
   const [page, setPage] = useState(1)

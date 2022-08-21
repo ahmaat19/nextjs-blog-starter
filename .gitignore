@@ -36,6 +36,7 @@ yarn-error.log*
 /public/uploads/*.png
 /public/uploads/*.jpg
 /public/uploads/*.svg
+/public/uploads/*.jpeg
 /public/uploads/*.pdf
 /public/uploads/*.docx
 /public/uploads/*.doc

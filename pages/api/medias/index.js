@@ -15,7 +15,7 @@ handler.get(async (req, res) => {
       total: files?.length,
       data: files?.map((file, index) => ({
         _id: index + 1,
-        url: `/upload/${file}`,
+        url: `/uploads/${file}`,
       })),
     })
   } catch (error) {

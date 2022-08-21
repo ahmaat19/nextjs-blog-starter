@@ -17,8 +17,10 @@
     "copy-to-clipboard": "^3.3.2",
     "crypto": "^1.0.1",
     "express-fileupload": "^1.4.0",
+    "gray-matter": "^4.0.3",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
+    "markdown-it": "^13.0.1",
     "moment": "^2.29.4",
     "mongoose": "^6.5.2",
     "next": "12.2.5",
@@ -32,6 +34,7 @@
     "react-loading-icons": "^1.1.0",
     "react-query": "^3.39.2",
     "react-quill": "^2.0.0",
+    "sass": "^1.54.5",
     "sharp": "^0.30.7"
   },
   "devDependencies": {

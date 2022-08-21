@@ -1,27 +1,30 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import withAuth from '../HOC/withAuth'
+import withAuth from '../../HOC/withAuth'
 import { confirmAlert } from 'react-confirm-alert'
 import { useForm } from 'react-hook-form'
-import usePostsHook from '../utils/api/posts'
-import useCategoriesHook from '../utils/api/categories'
-import { Spinner, Pagination, Message, Confirm } from '../components'
+import usePostsHook from '../../utils/api/posts'
+import useCategoriesHook from '../../utils/api/categories'
+import { Spinner, Pagination, Message, Confirm } from '../../components'
 import {
   dynamicInputSelect,
+  inputDate,
   inputText,
   staticInputSelect,
-} from '../utils/dynamicForm'
-import TableView from '../components/TableView'
-import FormView from '../components/FormView'
-import RichTextEditor from '../components/RichTextEditor'
+} from '../../utils/dynamicForm'
+import TableView from '../../components/TableView'
+import FormView from '../../components/FormView'
+import RichTextEditor from '../../components/RichTextEditor'
+import moment from 'moment'
 
 const Posts = () => {
   const [page, setPage] = useState(1)
   const [id, setId] = useState(null)
   const [edit, setEdit] = useState(false)
   const [q, setQ] = useState('')
-  const [text, setText] = useState('')
+  const [content, setContent] = useState('')
+  const [excerpt, setExcerpt] = useState('')
 
   const { getPosts, postPost, updatePost, deletePost } = usePostsHook({
     page,
@@ -95,8 +98,8 @@ const Posts = () => {
 
   // TableView
   const table = {
-    header: ['Title', 'Category'],
-    body: ['title', 'category.name'],
+    header: ['Title', 'Category', 'PublishedAt'],
+    body: ['title', 'category.name', 'publishedAt'],
     createdAt: 'createdAt',
     status: 'Status',
     data: data,
@@ -110,7 +113,9 @@ const Posts = () => {
     setValue('category', item?.category?._id)
     setValue('image', item?.image)
     setValue('status', item?.status)
-    setText(item?.content)
+    setContent(item?.content)
+    setExcerpt(item?.excerpt)
+    setValue('publishedAt', moment(item?.publishedAt).format('YYYY-MM-DD'))
   }
 
   const deleteHandler = (id) => {
@@ -126,17 +131,19 @@ const Posts = () => {
   const formCleanHandler = () => {
     reset()
     setEdit(false)
-    setText('')
+    setContent('')
+    setExcerpt('')
   }
 
   const submitHandler = (data) => {
     edit
       ? mutateAsyncUpdate({
           _id: id,
-          content: text,
+          content,
+          excerpt,
           ...data,
         })
-      : mutateAsyncPost({ ...data, content: text })
+      : mutateAsyncPost({ ...data, content, excerpt })
   }
 
   const form = [
@@ -171,7 +178,31 @@ const Posts = () => {
         })}
       </div>
       <div className='col-12'>
-        <RichTextEditor text={text} setText={setText} height={400} />
+        <label htmlFor='excerpt'>Excerpt</label>
+        <RichTextEditor
+          id='excerpt'
+          text={excerpt}
+          setText={setExcerpt}
+          height={100}
+        />
+      </div>
+      <div className='col-12'>
+        <label htmlFor='content'>Content</label>
+        <RichTextEditor
+          id='content'
+          text={content}
+          setText={setContent}
+          height={400}
+        />
+      </div>
+      <div className='col-lg-4 col-md-6 col-12'>
+        {inputDate({
+          register,
+          errors,
+          label: 'Publish Date',
+          name: 'publishedAt',
+          placeholder: 'Published Date',
+        })}
       </div>
       <div className='col-lg-4 col-md-6 col-12'>
         {staticInputSelect({

@@ -188,7 +188,7 @@ const Medias = () => {
                   <div className='card-body'>
                     <FaFileAlt
                       className='card-img-top mb-2 text-secondary'
-                      style={{ fontSize: '15rem' }}
+                      style={{ fontSize: '10rem' }}
                     />
                     <div className='d-flex justify-content-between'>
                       <a

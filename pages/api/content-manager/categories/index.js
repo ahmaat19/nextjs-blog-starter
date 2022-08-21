@@ -1,10 +1,9 @@
 import nc from 'next-connect'
-import db from '../../../config/db'
-import Post from '../../../models/Post'
-import Category from '../../../models/Category'
-import { isAuth } from '../../../utils/auth'
+import db from '../../../../config/db'
+import Category from '../../../../models/Category'
+import { isAuth } from '../../../../utils/auth'
 
-const schemaName = Post
+const schemaName = Category
 
 const handler = nc()
 handler.use(isAuth)
@@ -13,25 +12,18 @@ handler.get(async (req, res) => {
   try {
     const q = req.query && req.query.q
 
-    let query = schemaName.find(
-      q ? { title: { $regex: q, $options: 'i' } } : {}
-    )
+    let query = schemaName.find(q ? { name: { $regex: q, $options: 'i' } } : {})
 
     const page = parseInt(req.query.page) || 1
     const pageSize = parseInt(req.query.limit) || 25
     const skip = (page - 1) * pageSize
     const total = await schemaName.countDocuments(
-      q ? { title: { $regex: q, $options: 'i' } } : {}
+      q ? { name: { $regex: q, $options: 'i' } } : {}
     )
 
     const pages = Math.ceil(total / pageSize)
 
-    query = query
-      .skip(skip)
-      .limit(pageSize)
-      .sort({ createdAt: -1 })
-      .lean()
-      .populate('category', ['name'])
+    query = query.skip(skip).limit(pageSize).sort({ createdAt: -1 }).lean()
 
     const result = await query
 
@@ -53,18 +45,11 @@ handler.post(async (req, res) => {
   await db()
   try {
     const exist = await schemaName.findOne({
-      title: { $regex: `^${req.body?.title?.trim()}$`, $options: 'i' },
+      name: { $regex: `^${req.body?.name?.trim()}$`, $options: 'i' },
     })
 
     if (exist)
       return res.status(400).json({ error: 'Duplicate value detected' })
-
-    const category = await Category.findOne({
-      category: req.body?.category,
-      status: 'active',
-    })
-    if (!category)
-      return res.status(404).json({ error: 'Category is not active' })
 
     const object = await schemaName.create({
       ...req.body,

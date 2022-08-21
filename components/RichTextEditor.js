@@ -53,7 +53,7 @@ const RichTextEditor = ({ setText, text, height = 400 }) => {
       defaultValue={text}
       value={text}
       style={{ minHeight: `${height}px` }}
-      className='bg-light p-2'
+      className='bg-light p-2 border border-1'
       placeholder='Enter text here'
     />
   )
